@@ -7,8 +7,6 @@ import { queryPostItem } from '../../utils/service';
 
 import { format, formatWeek  } from '../../utils/index';
 
-import Loading from '../../components/loading';
-
 import './index.scss';
 
 const Detail = () => {
@@ -17,13 +15,9 @@ const Detail = () => {
 
   const [article,setArticle] = useState({} as Post);
 
-  const [loading,setLoading] = useState(false);
-
   useEffect(()=>{
-    setLoading(true);
     const subscription = queryPostItem(Number(id)).subscribe(res => {
       setArticle(res.repository.issue);
-      setLoading(false);
     })
     
     return () => {
@@ -35,19 +29,17 @@ const Detail = () => {
 
   return (
     <div className="container">
-      {loading?(<Loading />):(
-        <article>
-          <div className="article-title">
-            <h3>{article.title}</h3>
-            <div className="mate">
-              <span>发布于: {format(article.createdAt)}</span>
-              <span>当前: {formatWeek()}</span>
-            </div>
-            <hr/>
+      <article>
+        <div className="article-title">
+          <h3>{article.title}</h3>
+          <div className="mate">
+            <span>发布于: {format(article.createdAt)}</span>
+            <span>当前: {formatWeek()}</span>
           </div>
-          <div dangerouslySetInnerHTML={dangerouslyHtml(article.bodyHTML)}></div>
-        </article>
-      )}
+          <hr/>
+        </div>
+        <div dangerouslySetInnerHTML={dangerouslyHtml(article.bodyHTML)}></div>
+      </article>
     </div>
   ) 
 }

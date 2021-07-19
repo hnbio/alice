@@ -8,8 +8,8 @@
   animation: easeOut .6s linear;
   transition: 460ms;
   &:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 1px 2px 0px rgba(0,0,0,1);
+    transform: translateY(-6px);
+    box-shadow: 0 1px 6px 0px rgba(0, 0, 0, 0.1);
   }
   @include dark-light-bg-color($dark-bg-color,$light-bg-color);
   .show-case {
@@ -21,9 +21,10 @@
     position: relative;
     width: 100%;
     cursor: pointer;
+    color: #333333;
     a {
       text-decoration: none;
-      @include dark-light-color(#fff,#fff);
+      @include dark-light-color(#fff,#333);
     }
     @include dark-light-bg-color($dark-container-bg-color,$light-container-bg-color);
     .case-shadow {

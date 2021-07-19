@@ -8,11 +8,7 @@ import { queryPosts } from '../utils/service';
 
 import { Post, PageInfo } from '../utils/types';
 
-import Loading from '../components/loading';
-
 const Homes = () => {
-
-  const [loading,setLoading] = useState(false);
 
   const [posts, setPosts] = useState([] as Array<Post>);
   const [pageInfo,setPageInfo] = useState({} as PageInfo);
@@ -29,11 +25,9 @@ const Homes = () => {
       states: OPEN
       ${setPagination(action,cursor)}
     `
-    setLoading(true);
     const subscription = queryPosts(params).subscribe(res => {
       setPosts(res.repository.issues.nodes)
       setPageInfo(res.repository.issues.pageInfo)
-      setLoading(false);
     })
     return () => {
       subscription.unsubscribe()
@@ -48,14 +42,10 @@ const Homes = () => {
 
   return (
     <div className="grid-container">
-      {loading?(<Loading />):(
-        <>
-          {posts.map(item => (
-            <ShowCase key={item.id} info={item} />
-          ))}
-          <Pagination pageInfo={pageInfo} getPaginationAction={(action:PageAction, cursor:string)=>{getPaginationAction(action,cursor)}} />
-        </>
-      )}
+      {posts.map(item => (
+        <ShowCase key={item.id} info={item} />
+      ))}
+      <Pagination pageInfo={pageInfo} getPaginationAction={(action:PageAction, cursor:string)=>{getPaginationAction(action,cursor)}} />
     </div>
   )
 }

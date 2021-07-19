@@ -4,15 +4,11 @@ import { Label,CatePost } from '../../utils/types';
 
 import { queryLabels } from '../../utils/service';
 
-import Loading from '../../components/loading';
-
 import PostItem from '../category/components/postItem';
 
 import "./index.scss";
 
 const Labels = () => {
-
-  const [loading,setLoading] = useState(false);
 
   const [isSelected,setIsSelected] = useState(false);
 
@@ -23,10 +19,8 @@ const Labels = () => {
   const [labels, setLabels] = useState<Array<Label>>([]);
 
   useEffect(()=>{
-    setLoading(true);
     const subscription = queryLabels().subscribe(res => {
       setLabels(res.repository.labels.nodes)
-      setLoading(false);
     })
     
     return () => {
@@ -47,24 +41,20 @@ const Labels = () => {
 
   return (
     <div className="container">
-      {loading?(<Loading />):(
+      {isSelected?(
         <>
-          {isSelected?(
-            <>
-            <div className="cate-title">标签：<span onClick={()=>{setIsSelected(false)}}>{selectLabel.name}</span></div>
-            {labelPosts.map((item) =>(
-              <PostItem key={item.id} item={item} />
+        <div className="cate-title">标签：<span onClick={()=>{setIsSelected(false)}}>{selectLabel.name}</span></div>
+        {labelPosts.map((item) =>(
+          <PostItem key={item.id} item={item} />
+        ))}
+        </>
+      ):(
+        <>
+          <div className="tag">
+            {labels.map(item=>(
+              <span onClick={()=>{handleClick(item)}} key={item.id} className="tag-item" style={{color:`#${item.color}`}} title={item.description}>{item.name}</span>
             ))}
-            </>
-          ):(
-            <>
-              <div className="tag">
-                {labels.map(item=>(
-                  <span onClick={()=>{handleClick(item)}} key={item.id} className="tag-item" style={{color:`#${item.color}`}} title={item.description}>{item.name}</span>
-                ))}
-              </div>
-            </>
-          )}
+          </div>
         </>
       )}
     </div>

@@ -27,15 +27,11 @@ function getReadTime(len: number) {
 const ShowCase = (props:any) => {
   const { info } = props
 
-  const style = {
-    backgroundImage: `radial-gradient(circle at bottom left,${randomColor()},${randomColor()})`
-  }
-
   return (
     <div className="show-case-bg">
       <div className="show-case">
         <Link to={`/post/${info.number}`}>
-          <div className="case-shadow" style={style}></div>
+          <div className="case-shadow"></div>
           <div className="case-content">
               <h3>{info.title}</h3>
               <p>发布于 {format(info.createdAt)} • {getReadTime(info.bodyText.length)}分钟</p>
