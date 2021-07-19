@@ -28,6 +28,22 @@ main {
   display: grid;
   grid-template-columns:repeat(12,1fr);
   z-index: 1;
+  .right-icon {
+    position: fixed;
+    top: 40%;
+    left: -20px;
+    width: 40px;
+    .github-icon {
+      position: relative;
+      transition: 460ms;
+      &:hover {
+        border: 1px solid #333;
+        padding: 10px 5px;
+        left: 20px;
+        border-radius: 5px;
+      }
+    }
+  }
 }
 
 .grid-container {
